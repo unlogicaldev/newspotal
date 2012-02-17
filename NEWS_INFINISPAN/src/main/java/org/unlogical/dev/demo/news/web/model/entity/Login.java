@@ -4,6 +4,8 @@ import javax.validation.constraints.Size;
 
 import org.unlogical.dev.demo.news.common.abs.AbstractBaseEntity;
 
+import com.google.code.morphia.annotations.Entity;
+
 public class Login extends AbstractBaseEntity {
 
 	@Size(min=3,max=15)

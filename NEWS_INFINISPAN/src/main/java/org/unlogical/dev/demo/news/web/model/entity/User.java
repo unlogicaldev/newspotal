@@ -14,6 +14,7 @@ public class User extends AbstractBaseEntity {
 	@Id
 	private ObjectId id;
 	private String userId;
+	private String userName;
 	private String password;
 	private String email;
 	private String image;
@@ -23,6 +24,12 @@ public class User extends AbstractBaseEntity {
 	private String regDate;
 	private String modDate;
 	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public ObjectId getId() {
 		return id;
 	}

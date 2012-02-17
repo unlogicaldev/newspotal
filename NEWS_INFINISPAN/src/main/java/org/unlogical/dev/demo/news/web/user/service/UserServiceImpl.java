@@ -20,7 +20,9 @@ public class UserServiceImpl extends AbstractBaseService<UserServiceImpl> implem
 
 	@Override
 	public DBObject retriveUser(Login login) throws Exception {
-		return getDBCollection("User").findOne(login.toDBObject());
+		DBObject o = login.toDBObject();
+		o.removeField("className");
+		return getDBCollection("User").findOne(o);
 	}
 
 	@Override
