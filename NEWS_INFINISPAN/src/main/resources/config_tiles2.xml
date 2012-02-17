@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+         "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+         "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name=".popup" template="/WEB-INF/templates/main_popup.jsp">
+	</definition>
+	<definition name=".iframe" template="/WEB-INF/templates/main_iframe.jsp">
+	</definition>
+	<definition name=".default" template="/WEB-INF/templates/main.jsp">
+	  <put-attribute name="header" value="/WEB-INF/templates/header.jsp" />
+	</definition>
+	<definition name="error/*" extends=".default">
+		<put-attribute name="body" value="/WEB-INF/views/error/{1}.jsp" />
+	</definition>
+	<definition name="popup/*/*" extends=".popup">
+	  <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+	<definition name="iframe/*/*" extends=".iframe">
+	  <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+	<definition name="result/*/*" template="/WEB-INF/views/{1}/{2}.jsp">
+	</definition>
+	<definition name="*/*" extends=".default">
+	  <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+	<definition name="*/*/*" extends=".default">
+	  <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+	</definition>
+</tiles-definitions>

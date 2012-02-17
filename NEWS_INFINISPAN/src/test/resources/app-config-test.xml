@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:db.properties</value>
+				<value>classpath:conf.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<task:annotation-driven executor="excutor" scheduler="scheduler"/>
+	<task:executor id="excutor" pool-size="50"/>
+	<task:scheduler id="scheduler" />
+
+
+	<!-- Application Message Bundle -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/messages/messages" />
+		<property name="cacheSeconds" value="0" />
+	</bean>
+	
+	<context:component-scan base-package="org.unlogical.dev.demo.news">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	
+	<bean id="marshaller" class="org.springframework.oxm.castor.CastorMarshaller" />
+	<bean id="xmlMarshallingView" class="org.springframework.web.servlet.view.xml.MarshallingView">
+		<property name="marshaller" ref="marshaller" />
+		<property name="modelKey" value="xml" />
+	</bean>
+
+	<bean id="jkMapper" class="org.codehaus.jackson.map.ObjectMapper" />
+
+	<bean id="mongoTemplate" class="org.unlogical.dev.demo.news.common.mongo.MongoTemplate">
+	       <constructor-arg name="dbName" value="${db.mongo.name}"/>
+	       <constructor-arg name="username" value="${db.mongo.user}"/>
+	       <constructor-arg name="password" value="${db.mongo.pass}"/>
+	       <constructor-arg name="host" value="${db.mongo.host}"/>
+	       <constructor-arg name="port" value="${db.mongo.port}"/>
+	       <constructor-arg name="autoConnectRetry" value="${db.mongo.autoConnectRetry}"/>
+	       <constructor-arg name="connectionsPerHost" value="${db.mongo.connectionsPerHost}"/>
+	       <constructor-arg name="connectTimeout" value="${db.mongo.connectTimeout}"/>
+	       <constructor-arg name="maxWaitTime" value="${db.mongo.maxWaitTime}"/>
+	       <constructor-arg name="threadsAllowedToBlockForConnectionMultiplier" value="${db.mongo.threadsAllowedToBlockForConnectionMultiplier}"/>
+	       <constructor-arg name="socketTimeout" value="${db.mongo.socketTimeout}"/>
+	 </bean>
+    
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<constructor-arg value="256"/>
+	</bean>
+
+    
+</beans>

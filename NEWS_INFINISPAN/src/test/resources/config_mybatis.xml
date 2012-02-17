@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd ">
+<configuration>
+ <settings>
+  <setting name="cacheEnabled" value="true" />
+  <setting name="useGeneratedKeys" value="true" />
+  <setting name="defaultExecutorType" value="REUSE" />
+ </settings>
+ <typeAliases>
+  <typeAlias alias="hashMap" type="java.util.HashMap" />
+  <typeAlias alias="map" type="java.util.Map" />
+  <typeAlias alias="vms" type="com.its.suncheon.web.model.entity.Vms" />
+  <typeAlias alias="cctv" type="com.its.suncheon.web.model.entity.Cctv" />
+  <typeAlias alias="vmsInfo" type="com.its.suncheon.web.model.entity.VmsInfo" />
+  <typeAlias alias="board" type="com.its.suncheon.web.model.entity.Board" />
+  <typeAlias alias="reply" type="com.its.suncheon.web.model.entity.Reply" />
+  <typeAlias alias="member" type="com.its.suncheon.web.model.entity.Member" />
+  <typeAlias alias="traffic" type="com.its.suncheon.web.model.entity.Traffic" />
+  <typeAlias alias="trafficMain" type="com.its.suncheon.web.model.entity.TrafficMain" />
+ </typeAliases>
+</configuration>
