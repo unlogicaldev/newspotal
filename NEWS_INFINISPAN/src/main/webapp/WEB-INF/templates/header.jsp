@@ -6,7 +6,7 @@
 		id <input type="text" name="userId" size=15/>
 		password <input type="password" name="password" size=15/>
 		<input type="submit" value="SignIn"/>
-		<a href="/user/signup"><input type="button" value="SignUp"/></a>
+		<a href="/user/signup"><input type="button" value="SignUp"/></a><font color="red">${message}</font> 
 		</form>
 	</c:when>
 	<c:otherwise>

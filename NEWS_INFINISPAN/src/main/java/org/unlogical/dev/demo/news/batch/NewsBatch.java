@@ -1,11 +1,13 @@
 package org.unlogical.dev.demo.news.batch;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.unlogical.dev.demo.news.common.cache.CacheManager;
+import org.unlogical.dev.demo.news.common.cache.InfinispanCacheManager;
 import org.unlogical.dev.demo.news.common.xml.XmlReader;
 import org.unlogical.dev.demo.news.web.news.service.NewsService;
 
@@ -46,12 +48,28 @@ public class NewsBatch {
 
 	@Scheduled(cron="30 */1 * * * *")
 	public void setCacheBatch(){
-		String[] cats = new String[]{"최신뉴스","Engadget","경제_IT","증권","사회","전국","정치_북한","보안","세계","문화_예술","스포츠","연예"};
+		String[] cats = new String[]{"all","Engadget","경제_IT","증권","사회","전국","정치_북한","보안","세계","문화_예술","스포츠","연예"};
 		List<DBObject> list = null;
 		for(String c:cats){
 			try {
 				list = newsService.retriveNewsList(c, 0, 30);
 				CacheManager.setNewsListCache(c, list);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Scheduled(cron="40 */1 * * * *")
+	public void setInfinispanCacheBatch(){
+		String[] cats = new String[]{"all","Engadget","경제_IT","증권","사회","전국","정치_북한","보안","세계","문화_예술","스포츠","연예"};
+		List<Map<String,Object>> list = null;
+		for(String c:cats){
+			try {
+				list = newsService.retriveNewsListMap(c, 0, 30);
+				System.out.println(list);
+				InfinispanCacheManager.setNewsListCache(c, list);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
