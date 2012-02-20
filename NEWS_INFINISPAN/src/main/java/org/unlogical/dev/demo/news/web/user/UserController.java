@@ -1,5 +1,6 @@
 package org.unlogical.dev.demo.news.web.user;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -11,14 +12,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.unlogical.dev.demo.news.common.abs.AbstractBaseController;
+import org.unlogical.dev.demo.news.common.cache.InfinispanCacheManager;
 import org.unlogical.dev.demo.news.web.model.entity.Login;
 import org.unlogical.dev.demo.news.web.model.entity.User;
 import org.unlogical.dev.demo.news.web.user.service.UserService;
 
 import com.mongodb.DBObject;
 
-@Controller
-@RequestMapping(value="/user")
 public class UserController extends AbstractBaseController<UserController> {
 
 	@Autowired private UserService userService;
@@ -31,7 +31,11 @@ public class UserController extends AbstractBaseController<UserController> {
 	
 	@RequestMapping(value="/signout", method=RequestMethod.GET)
 	public String userSignOut(HttpServletRequest req,HttpServletResponse res){
-		req.getSession().invalidate();
+		//InfinispanCacheManager.removeSessioinCache(NEWS_SESSION);
+		Cookie c = new Cookie("NEWS_SESSION","");
+		c.setMaxAge(0);
+		c.setPath("/");
+		res.addCookie(c);
 		return "redirect:/news/";
 	}
 

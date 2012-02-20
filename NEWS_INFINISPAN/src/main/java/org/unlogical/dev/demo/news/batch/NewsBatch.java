@@ -46,7 +46,7 @@ public class NewsBatch {
 		xmlReader.rssRead(rssUrl, "연예");
 	}
 
-	//@Scheduled(cron="30 */1 * * * *")
+	@Scheduled(cron="30 */1 * * * *")
 	public void setCacheBatch(){
 		String[] cats = new String[]{"all","Engadget","경제_IT","증권","사회","전국","정치_북한","보안","세계","문화_예술","스포츠","연예"};
 		List<DBObject> list = null;
@@ -61,7 +61,7 @@ public class NewsBatch {
 		}
 	}
 	
-	//@Scheduled(cron="40 */1 * * * *")
+	@Scheduled(cron="40 */1 * * * *")
 	public void setInfinispanCacheBatch(){
 		String[] cats = new String[]{"all","Engadget","경제_IT","증권","사회","전국","정치_북한","보안","세계","문화_예술","스포츠","연예"};
 		List<Map<String,Object>> list = null;

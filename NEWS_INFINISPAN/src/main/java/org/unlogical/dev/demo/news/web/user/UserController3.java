@@ -21,6 +21,8 @@ import org.unlogical.dev.demo.news.web.user.service.UserService;
 
 import com.mongodb.DBObject;
 
+@Controller
+@RequestMapping(value="/user")
 public class UserController3 extends AbstractBaseController<UserController3> {
 
 	@Autowired private UserService userService;

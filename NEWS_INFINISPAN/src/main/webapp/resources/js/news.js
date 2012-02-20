@@ -33,6 +33,7 @@ function loadNewsListResult(data){
 }
 
 function makeNewsHtml(s){
+	if(s.description.indexOf('www.youtube.com') > -1) s.description = "테스트기사.!!!";
 	var t = '<li><dl><dt><a style="color:blue;" href="'+s.link+'">'+s.title+'</a></dt><dd>'+s.description+'<span class="writing">'+s.creator+'</span><span class="date">'+s.date+'</span></dd></dl></li>';
 	return t;
 }

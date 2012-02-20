@@ -1,5 +1,7 @@
 package org.unlogical.dev.demo.news.web.news;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.unlogical.dev.demo.news.common.abs.AbstractBaseController;
-import org.unlogical.dev.demo.news.common.cache.CacheManager;
 import org.unlogical.dev.demo.news.common.cache.InfinispanCacheManager;
 import org.unlogical.dev.demo.news.web.news.service.NewsService;
 
@@ -25,7 +26,11 @@ public class NewsController extends AbstractBaseController<NewsController> {
 		
 		model.addAttribute("cList", new String[]{"최신뉴스","Engadget","경제_IT","증권","사회","전국","정치_북한","보안","세계","문화_예술","스포츠","연예"});
 		if(!NEWS_SESSION.equals("")){
-			model.addAttribute("USER_INFO", InfinispanCacheManager.getSessionCache(NEWS_SESSION));
+			String userId = NEWS_SESSION.split("_")[0];
+			String sessionId = NEWS_SESSION.split("_")[1];
+			Map<String,Object> u = InfinispanCacheManager.getSessionCache(userId);
+			if(sessionId.equals(u.get("sessionId"))) model.addAttribute("USER_INFO", u);
+			else model.addAttribute("message", "다른곳에서 로그인해부렀음...!!!");
 		}
 		return "news/main";
 	}
